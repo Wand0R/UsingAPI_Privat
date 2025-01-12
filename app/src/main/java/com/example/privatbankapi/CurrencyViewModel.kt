@@ -17,7 +17,7 @@ class CurrencyViewModel : ViewModel() {
     // Ініціалізація Retrofit
     private val retrofit = Retrofit.Builder()
         .baseUrl("https://api.privatbank.ua/p24api/")
-        .addConverterFactory(GsonConverterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create()) // Використовуємо Gson конвертер
         .build()
 
     private val api = retrofit.create(PrivatBankApi::class.java)
@@ -26,10 +26,10 @@ class CurrencyViewModel : ViewModel() {
     fun fetchCurrencyRates(date: String) {
         viewModelScope.launch {
             try {
-                val response = api.getCurrencyArchive(date = date)
-                _currencyRates.value = response.exchangeRate.filter { it.currency != null }
+                val response = api.getCurrencyArchive(date = date) // Викликаємо API
+                _currencyRates.value = response.exchangeRate.filter { it.currency != null } // Фільтруємо валюти
             } catch (e: Exception) {
-                e.printStackTrace()
+                e.printStackTrace() // Логування помилки
             }
         }
     }
