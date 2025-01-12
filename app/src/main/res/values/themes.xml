@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <style name="Theme.PrivatBankAPI" parent="android:Theme.Material.Light.NoActionBar"/>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Day Theme -->
+    <style name="Theme.PrivatBankAPI" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Primary color -->
+        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimaryDark">@color/purple_700</item>
+        <item name="colorAccent">@color/teal_200</item>
+    </style>
+
 </resources>

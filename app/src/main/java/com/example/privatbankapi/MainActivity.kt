@@ -1,14 +1,16 @@
 package com.example.privatbankapi
 
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.lifecycle.ViewModelProvider
 
 class MainActivity : AppCompatActivity() {
 
-    private val viewModel: CurrencyViewModel by viewModels()
+    private val viewModel: CurrencyViewModel by lazy {
+        ViewModelProvider(this)[CurrencyViewModel::class.java]
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -16,7 +18,7 @@ class MainActivity : AppCompatActivity() {
 
         // RecyclerView
         val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
-        val adapter = CurrencyAdapter(emptyList()) // Підключення адаптера
+        val adapter = CurrencyAdapter(emptyList())
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
 
@@ -31,12 +33,12 @@ class MainActivity : AppCompatActivity() {
                         sale = rate.saleRate?.toString() ?: "N/A"
                     )
                 }
-                adapter.updateData(formattedRates) // Оновлюємо дані в адаптері
+                adapter.updateData(formattedRates)
             }
         }
 
         // Currency by date
-        val date = "01.12.2014" // Date example
+        val date = "01.12.2014"
         viewModel.fetchCurrencyRates(date)
     }
 }
