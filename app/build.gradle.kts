@@ -33,11 +33,12 @@ android {
     buildFeatures {
         compose = true
     }
+
 }
 
 dependencies {
-
-    implementation("androidx.core:core-ktx:1.10.1")
+    implementation("androidx.constraintlayout:constraintlayout:2.2.0")
+    implementation("androidx.core:core-ktx:1.15.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
     implementation("androidx.activity:activity-compose:1.8.0")
     implementation(platform("androidx.compose:compose-bom:2024.04.01"))
