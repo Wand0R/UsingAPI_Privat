@@ -16,24 +16,27 @@ class MainActivity : AppCompatActivity() {
 
         // RecyclerView
         val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
-        val adapter = CurrencyAdapter(emptyList()) // Adapter
+        val adapter = CurrencyAdapter(emptyList()) // Підключення адаптера
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
 
         // ViewModel
         viewModel.currencyRates.observe(this) { rates ->
-            adapter.updateData(rates.map { rate ->
-                CurrencyRate(
-                    ccy = rate.currency ?: "",
-                    base_ccy = rate.baseCurrency,
-                    buy = rate.purchaseRate?.toString() ?: "N/A",
-                    sale = rate.saleRate?.toString() ?: "N/A"
-                )
-            })
+            if (rates != null) {
+                val formattedRates = rates.map { rate ->
+                    CurrencyRate(
+                        ccy = rate.currency ?: "Unknown",
+                        base_ccy = rate.baseCurrency,
+                        buy = rate.purchaseRate?.toString() ?: "N/A",
+                        sale = rate.saleRate?.toString() ?: "N/A"
+                    )
+                }
+                adapter.updateData(formattedRates) // Оновлюємо дані в адаптері
+            }
         }
 
         // Currency by date
-        val date = "01.12.2014" // Date
+        val date = "01.12.2014" // Date example
         viewModel.fetchCurrencyRates(date)
     }
 }
