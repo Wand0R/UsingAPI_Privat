@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
 
         // RecyclerView
         val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
-        val adapter = CurrencyAdapter(emptyList())
+        val adapter = CurrencyAdapter(emptyList()) // Adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
 
@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Currency by date
-        val date = "01.12.2014" // date example
+        val date = "01.12.2014" // Date
         viewModel.fetchCurrencyRates(date)
     }
 }

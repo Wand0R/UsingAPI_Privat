@@ -10,26 +10,26 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class CurrencyViewModel : ViewModel() {
 
-    // LiveData для списку курсів валют
+    // LiveData
     private val _currencyRates = MutableLiveData<List<ExchangeRate>>()
     val currencyRates: LiveData<List<ExchangeRate>> get() = _currencyRates
 
-    // Ініціалізація Retrofit
+    // Retrofit
     private val retrofit = Retrofit.Builder()
         .baseUrl("https://api.privatbank.ua/p24api/")
-        .addConverterFactory(GsonConverterFactory.create()) // Використовуємо Gson конвертер
+        .addConverterFactory(GsonConverterFactory.create()) // JSON to kt
         .build()
 
     private val api = retrofit.create(PrivatBankApi::class.java)
 
-    // Завантаження даних за конкретну дату
+    // Currency by date
     fun fetchCurrencyRates(date: String) {
         viewModelScope.launch {
             try {
-                val response = api.getCurrencyArchive(date = date) // Викликаємо API
-                _currencyRates.value = response.exchangeRate.filter { it.currency != null } // Фільтруємо валюти
+                val response = api.getCurrencyArchive(date = date) // API
+                _currencyRates.value = response.exchangeRate.filter { it.currency != null }
             } catch (e: Exception) {
-                e.printStackTrace() // Логування помилки
+                e.printStackTrace()
             }
         }
     }
