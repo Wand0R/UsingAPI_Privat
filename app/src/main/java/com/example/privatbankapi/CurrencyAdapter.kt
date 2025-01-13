@@ -38,9 +38,10 @@ class CurrencyAdapter(
     override fun getItemCount(): Int = currencyList.size
 
     fun updateData(newCurrencyList: List<CurrencyRate>) {
-        this.currencyList = newCurrencyList
+        this.currencyList = newCurrencyList.filter { rate ->
+            rate.ccy.isNotBlank() && rate.buy != "N/A" && rate.sale != "N/A"
+        }
         notifyDataSetChanged()
     }
 }
-
 
