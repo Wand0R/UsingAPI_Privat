@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">PrivatBankAPI</string>
+    <string name="currency">%s</string>
+    <string name="base_currency">Base: %s</string>
+    <string name="buy_rate">Buy: %s</string>
+    <string name="sale_rate">Sale: %s</string>
+
+
 </resources>

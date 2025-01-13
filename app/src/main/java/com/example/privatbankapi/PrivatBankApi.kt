@@ -11,16 +11,14 @@ data class ExchangeRate(
     val purchaseRate: Double?
 )
 
-data class CurrencyArchiveResponse(
+interface PrivatBankApi {
+    @GET("exchange_rates?json")
+    suspend fun getCurrencyArchive(
+        @Query("date") date: String
+    ): ResponseData
+}
+
+data class ResponseData(
     val date: String,
     val exchangeRate: List<ExchangeRate>
 )
-
-
-interface PrivatBankApi {
-    @GET("exchange_rates")
-    suspend fun getCurrencyArchive(
-        @Query("json") json: Boolean = true,
-        @Query("date") date: String // Date "dd.MM.yyyy"
-    ): CurrencyArchiveResponse
-}

@@ -1,6 +1,8 @@
 plugins {
     id("com.android.application") version "8.2.2"
     id("org.jetbrains.kotlin.android") version "1.9.10"
+    id ("kotlin-android")
+
 }
 
 android {
@@ -28,6 +30,10 @@ android {
     }
     buildFeatures {
         compose = true
+
+        viewBinding = true
+
+        dataBinding = false // Вимкнено Data Binding
     }
 
     composeOptions {

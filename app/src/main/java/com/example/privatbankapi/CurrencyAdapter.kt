@@ -6,37 +6,41 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
+// ОБОВ'ЯЗКОВО імпортуємо com.example.privatbankapi.R
+import com.example.privatbankapi.R
 
-class CurrencyAdapter(private var currencyList: List<CurrencyRate>) :
-    RecyclerView.Adapter<CurrencyAdapter.CurrencyViewHolder>() {
+class CurrencyAdapter(
+    private var currencyList: List<CurrencyRate>
+) : RecyclerView.Adapter<CurrencyAdapter.CustomViewHolder>() {
 
+    inner class CustomViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        // Використовуємо наш клас-«обгортку» з findViewById
+        private val holder = CurrencyViewHolder(view)
 
-    inner class CurrencyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val ccyTextView: TextView = view.findViewById(R.id.ccyTextView)
-        val baseCcyTextView: TextView = view.findViewById(R.id.baseCcyTextView)
-        val buyTextView: TextView = view.findViewById(R.id.buyTextView)
-        val saleTextView: TextView = view.findViewById(R.id.saleTextView)
+        fun bind(currency: CurrencyRate) {
+            holder.tvCurrency.text = currency.ccy ?: "N/A"
+            holder.tvBaseCurrency.text = "Base: ${currency.base_ccy ?: "N/A"}"
+            holder.tvBuy.text = "Buy: ${currency.buy ?: "N/A"}"
+            holder.tvSale.text = "Sale: ${currency.sale ?: "N/A"}"
+        }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CurrencyViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_currency, parent, false)
-        return CurrencyViewHolder(view)
+        return CustomViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: CurrencyViewHolder, position: Int) {
-        val currency = currencyList[position]
-        holder.ccyTextView.text = currency.ccy
-        holder.baseCcyTextView.text = "Base: ${currency.base_ccy}"
-        holder.buyTextView.text = "Buy: ${currency.buy}"
-        holder.saleTextView.text = "Sale: ${currency.sale}"
+    override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
+        holder.bind(currencyList[position])
     }
 
     override fun getItemCount(): Int = currencyList.size
 
-    // Оновлення даних у списку
-    fun updateData(newList: List<CurrencyRate>) {
-        currencyList = newList
+    fun updateData(newCurrencyList: List<CurrencyRate>) {
+        this.currencyList = newCurrencyList
         notifyDataSetChanged()
     }
 }
+
+

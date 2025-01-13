@@ -27,9 +27,18 @@ class CurrencyViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 val response = api.getCurrencyArchive(date = date) // API
-                _currencyRates.value = response.exchangeRate.filter { it.currency != null }
+                if (response != null) {
+                    // Логування отриманих даних
+                    println("Response: ${response.exchangeRate}")
+
+                    // Фільтруємо лише ті курси, які мають назву валюти
+                    _currencyRates.value = response.exchangeRate.filter { it.currency != null }
+                } else {
+                    println("No data received from API")
+                }
             } catch (e: Exception) {
                 e.printStackTrace()
+                println("Error fetching currency rates: ${e.message}")
             }
         }
     }

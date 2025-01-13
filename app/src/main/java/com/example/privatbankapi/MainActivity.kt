@@ -9,12 +9,12 @@ import android.app.DatePickerDialog
 import android.widget.Button
 import android.widget.TextView
 import java.util.Calendar
+import androidx.activity.viewModels
+
 
 class MainActivity : AppCompatActivity() {
 
-    private val viewModel: CurrencyViewModel by lazy {
-        ViewModelProvider(this)[CurrencyViewModel::class.java]
-    }
+    private val viewModel: CurrencyViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,7 +22,13 @@ class MainActivity : AppCompatActivity() {
 
         // Ініціалізація RecyclerView
         val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
-        val adapter = CurrencyAdapter(emptyList()) // Підключення адаптера
+        val adapter = CurrencyAdapter(emptyList())
+        recyclerView.adapter = adapter
+        adapter.updateData(listOf(
+            CurrencyRate("USD", "UAH", "27.50", "28.00"),
+            CurrencyRate("EUR", "UAH", "30.00", "30.50")
+        ))
+
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
 
